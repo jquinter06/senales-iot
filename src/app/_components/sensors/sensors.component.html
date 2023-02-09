@@ -1,0 +1,86 @@
+<div class="ml-4 mr-4">
+  <div class="row  mt-15 ml-1">
+    <div class="col-lg-2">
+      <span>Estado:</span>
+      <ng-select class="" [items]="state" bindLabel="name" bindValue="code" [(ngModel)]="stateSelected"
+        (change)="onChangeState()" [clearable]="false">
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <span>Origen:</span>
+      <ng-select class="" [items]="origen" bindLabel="name" bindValue="code" [(ngModel)]="origenSelected"
+        (change)="onChangeOrigen()" [clearable]="false">
+      </ng-select>
+    </div>
+    <div class="col-lg-3">
+      <span>Estaciones:</span>
+      <ng-select class="" [items]="stations" bindLabel="descripcion" bindValue="idestacion"
+        [(ngModel)]="stationSelected" (change)="onChangeStations()" >
+      </ng-select>
+    </div>
+    <div class="col-lg-4 text-center mt-3 pt-1">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-text-transparent">
+              <img class="icon-menu" src="../../assets/svg/buscar.svg">
+            </span>
+          </div>
+          <input type="text" class="form-control form-control-transparent" placeholder="Buscar"
+          [(ngModel)]="searchMySignals" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 mt-3 pt-1">
+      <button type="button" class="btn btn-danger  btn-block" (click)='onCleanFilter()'><i class="fas fa-trash-alt fa-1x"></i></button>
+    </div>
+  </div>
+
+  <div class="row scroll">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body card-body-wPadding">
+          <table class="table table-hover table-cursor">
+            <thead>
+              <tr>
+                <th class="head-table table-text" scope="col"></th>
+                <th class="head-table table-text" scope="col">Señal</th>
+                <th class="head-table table-text" scope="col">Variable - Estación</th>
+                <th class="head-table table-text" scope="col">Valor</th>
+                <th class="head-table table-text" scope="col">Última lectura</th>
+                <th class="head-table table-text" scope="col">Estado</th>
+                <th class="head-table table-text" scope="col">Origen</th>
+               <!--<th class="head-table table-text" scope="col">Alarmas</th>-->
+              </tr>
+            </thead>
+            <tbody>
+                <!--<tr
+                *ngFor="let signal of mySignalList | paginate: {itemsPerPage: 10, currentPage: pageActual} | filter : {text:searchMySignals, variable:'signal_station'}; let i=index"
+                [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal}" >-->
+                
+              <tr
+                *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index"
+                [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal}">
+                <td class="table-text">
+                  <img src="{{signal?.icono}}" class="icon-list mr-1"
+                    [ngClass]="{'blue-cart-filter': signal.estado === '1', 'yellow-cart-filter': signal.estado === '0' }">
+                </td>
+                <td>{{signal?.descsenal}}</td>
+                <td class="table-text station">{{signal?.nombre_variable}} - {{signal?.nombre_estacion}}</td>
+                <td class="table-text value">{{signal?.valor}} {{signal.unidad}}</td>
+                <td class="table-text">{{signal?.ultimoreporte}}</td>
+                <td class="table-text" *ngIf="signal.estado === '1'">Transmitiendo</td>
+                <td class="table-text" *ngIf="signal.estado === '0'">Sin transmitir</td>
+                <td class="table-text" *ngIf="signal.manual === 'S'">Manual</td>
+                <td class="table-text" *ngIf="signal.manual === 'N'">Automatico</td>
+                <td class="table-text" *ngIf="!signal.manual">No definido</td>
+               <!-- <td class="table-text">{{signal?.cantidad_alarmas}}</td> -->
+              </tr>
+            </tbody>
+          </table>
+           <!-- <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>  -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

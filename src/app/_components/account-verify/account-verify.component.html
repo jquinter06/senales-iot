@@ -1,0 +1,11 @@
+<div class="alert alert-danger alert-dismissible fade show" *ngIf="alert">
+  <img class="logo-menu" src="../../assets/svg/info.svg">
+  <strong class="label-alert" *ngIf="!showReport"> Tu cuenta necesita ser
+    verificada.</strong>
+  <strong class="label-alert" *ngIf="showReport"> Debes seleccionar algún color para cada señal.</strong>
+  <button type="button" class="btn btn-light" (click)="onSend()" *ngIf="!showReport">Enviar correo
+    verificación</button>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

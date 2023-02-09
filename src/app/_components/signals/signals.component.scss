@@ -1,0 +1,260 @@
+/*
+.stat {
+  border-radius: 50%;
+  height: 48px;
+  padding: 0.75rem;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.blue {
+  background-color: #22b0fc !important;
+}
+
+.yellow {
+  background-color: #ffb946 !important;
+}
+
+.hover-info:hover{
+  background-color: #22b0fc;
+}
+
+.hover-danger:hover{
+  background-color: #dc3545;
+}
+
+.blue-cart-filter {
+  filter: invert(50%) sepia(80%) saturate(500%) hue-rotate(160deg);
+}
+
+.yellow-cart-label {
+  color: #ffb946 !important;
+}
+
+.yellow-cart-filter {
+  filter: invert(60%) sepia(30%) saturate(1000%) hue-rotate(350deg);
+}
+*/
+.mt-2{
+  padding: 0.5rem!important;
+}
+
+.hover-info:hover{
+  background-color: #22b0fc;
+}
+
+.hover-danger:hover{
+  background-color: #dc3545;
+}
+
+.hover-info:active{
+  transform: scale(.9);
+}
+
+.hover-danger:active {
+  transform: scale(.9);
+}
+
+.remove-signal {
+  color: #9da1a2 !important;
+}
+
+.remove-signal:hover {
+  color: #f33d2c !important;
+}
+
+.mt-8 {
+  margin-top: 8rem;
+}
+.filters {
+  left: 47px;
+  background-color: #F8F9FA;
+}
+
+.icon-list {
+  width: 13px;
+}
+
+.card-header-title, .card-header-subtitle  {
+  display: block;
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 27px;
+  letter-spacing: 0.04em;
+}
+.card-header-subtitle {
+  font-weight: 200;
+  font-size: 12px;
+}
+
+.blue {
+  background-color: #22b0fc !important;
+}
+
+.yellow {
+  background-color: #ffb946 !important;
+}
+
+.blue-cart-label {
+  color: #22b0fc !important;
+}
+
+.blue-cart-filter {
+  filter: invert(50%) sepia(80%) saturate(500%) hue-rotate(160deg);
+}
+
+.yellow-cart-label {
+  color: #ffb946 !important;
+}
+
+.yellow-cart-filter {
+  filter: invert(60%) sepia(30%) saturate(1000%) hue-rotate(350deg);
+}
+
+.remove-signal {
+  color: #9da1a2 !important;
+}
+
+.remove-signal:hover {
+  color: #f33d2c !important;
+}
+
+.mt-8 {
+  margin-top: 8rem;
+}
+.filters {
+  left: 47px;
+  background-color: #F8F9FA;
+}
+
+  .dimensiones{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 24px 48px;
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: calc(50% - 300px/2);
+    top: calc(50% - -300px/2 - 0.94px);
+    background: #FFFFFF;
+    box-shadow: 0px 4px 16px rgb(0 0 0 / 16%);
+    border-radius: 16px;
+    }
+
+
+    .text-principal{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      position: static;
+      width: 356px;
+      height: 0px;
+      left: 96px;
+      top: 0px;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      margin: 0px 24px;
+   }
+
+   .titulo{
+    position: absolute;
+    width: 277px;
+    height: 36px;
+    left: 23px;
+    top: 80px;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 30px;
+    color: #1226AA;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 16px 0px;
+   }
+
+
+   .icons-principal{
+    position: absolute;
+    width: 72px;
+    height: 71px;
+    left: 38px;
+    top: -63px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 24px;
+ }
+
+ .icon-position{
+    position: absolute;
+    width: 64px;
+    height: 230px;
+    left: 50px;
+    top: 7px;
+ }
+
+ .estaes{
+    position: absolute;
+    left: 2.93%;
+    right: 32.56%;
+    top: 48.78%;
+    bottom: 56.89%;
+ }
+
+ .iniciar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    position: absolute;
+    width: 250px;
+    height: 38px;
+    left: 24px;
+    top: 195px;
+    border-radius: 6px;
+    border: none;
+ }
+
+ .parar{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  position: absolute;
+  width: 250px;
+  height: 38px;
+  left: 24px;
+  top: 240px;
+  border-radius: 6px;
+  border: none;
+ }
+
+.active-estado {
+  filter: invert(100%) sepia() saturate(10000%) hue-rotate(50deg);
+}
+
+.active-estado-rojo{
+  filter: invert(70%) sepia() saturate(10000%) hue-rotate(0deg);
+}
+
+.card{
+  margin: 5px!important;
+  width: inherit;
+}
+
+.ajuste{
+  margin-top: 1.2rem!important;
+  margin-left: 0.5rem;
+}

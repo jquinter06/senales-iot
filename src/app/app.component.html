@@ -1,0 +1,16 @@
+﻿
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#5654ff" type = "ball-triangle-path" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<div class="wrapper" id="wrapper">
+  <!-- Sidebar  -->
+  <div *ngIf="!!currentUser" [ngClass]="{'is-visible' : menu}">
+    <app-menu></app-menu>
+  </div>
+
+  <!-- Page Content  -->
+  <div id="content" [ngClass]="{'content-open' : openMenu}">
+    <div *ngIf="!!currentUser" [ngClass]="{'is-visible' : menu}">
+      <app-navbar [isOpenMenu]='openMenu'></app-navbar>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

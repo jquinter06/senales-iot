@@ -1,0 +1,50 @@
+<nav id="sidebar" [ngClass]="{ 'active': navbarOpen }">
+  <div class="sidebar-header" (click)="toggleNavbar()">
+    <h3 class="sidebar-header-h3">
+      <img class="logo-menu" src="../../assets/svg/logo.svg" style="
+      float: left;">
+      <img class="logo-menu" src="../../assets/svg/hamburgesa.svg" style="
+      float: right;">
+    </h3>
+    <strong><img class="" src="../../assets/svg/yawa.svg" style="position: relative;top: 8px;"></strong>
+  </div>
+  <ul class="list-unstyled">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/']" routerLinkActive="item--active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <img class="icon-menu home" src="../../assets/svg/home.svg">
+        <span class="menu-span">
+          Inicio
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/panel']" routerLinkActive="item--active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <img class="icon-menu home" src="../../assets/svg/tablero.svg">
+        <span class="menu-span">
+          Tablero de control
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/sensors']" routerLinkActive="item--active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <img class="icon-menu home" src="../../assets/svg/sensor.svg">
+        <span class="menu-span">
+          Sensores
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/reports']" routerLinkActive="item--active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <img class="icon-menu home" src="../../assets/svg/reports.svg">
+        <span class="menu-span">
+          Reportes
+        </span>
+      </a>
+    </li>
+
+  </ul>
+</nav>

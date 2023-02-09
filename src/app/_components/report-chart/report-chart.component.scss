@@ -1,0 +1,39 @@
+.label-report {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+}
+
+.download--list {
+  padding: 17px 0px;
+  border-bottom: 1px solid #c2cfe0;
+  width: 400px;
+  cursor: pointer;
+}
+
+.download--list--checkbox {
+  display: block;
+}
+:checked + span {
+  font-weight: bold;
+}
+
+/* Optional other stuff just to make it look better */
+label {
+  display: inline-block;
+  width: 200px;
+  padding: 5px;
+}
+
+.contenedor2{
+  width: 50%;
+  text-align: center;
+}
+
+.contenedor{
+    align-self: center;
+    text-align: center;
+}

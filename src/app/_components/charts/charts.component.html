@@ -1,0 +1,202 @@
+<div class="row">
+  <main class="col-md-12  px-md-5">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
+      <a (click)="goBack()">
+        <img class="icon-menu" src="../../assets/svg/back.svg">
+        <span class="back">
+          volver
+        </span>
+      </a>
+      <div class="btn-toolbar mb-2 mb-md-0"  *ngIf="showChart">
+        <button class="btn btn-primary btn-add-signal" (click)="openModalShowSignals(modalSignals)">
+          Agregar señal  <img class="icon-menu" src="../../assets/svg/add-circle.svg">
+        </button>
+      </div>
+    </div>
+    <div class="col-12 mt-5 p-0" *ngIf="!showChart">
+      <h1 class="text-center pt-5 no-data">
+        No hay datos para mostrar
+      </h1>
+      <p class="h4 text-center no-data-sublabel">la señal no esta transmitiendo datos</p>
+    </div>
+    <div class="card-header p-3" style="background: #fff;" *ngIf="(!!signal && showChart)">
+      <div class="row" *ngIf="signals.length == 1">
+
+        <div class="col-md-3 float-left">
+          <div class="d-flex flex-row text-left">
+            <span class="circle mt-2" [ngStyle]="{'background-color': active}">
+              <div class="circle-div">
+                <img src="{{signal?.icono}}" (click)="goBack()">
+              </div>
+            </span>
+            <div class="p-2">
+              <h5 class="card-header-title m-0 pt-1">{{signal?.nombre_variable}}</h5>
+              <span class="sublabel">{{signal?.nombre_estacion}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class = "col-md-7 fecha-grafica">
+          <kendo-datetimepicker [format]="format" [(value)]="dateFrom" class="ml-2 mr-1" (valueChange)="onChange($event)"
+            id="datetimepicker1" [disabled]="disabledRanges" [(ngModel)]="dateFrom"></kendo-datetimepicker>
+          -
+          <kendo-datetimepicker class="ml-1" [format]="format" [(value)]="dateTo" [min]="min" [max]="max" id="datetimepicker2"
+            [disabled]="disabledRanges" (valueChange)="onChange($event)"></kendo-datetimepicker> &nbsp;
+            <button type="button" class="btn btn-primary" (click)="graficar()">
+              <img class="" src="../../assets/svg/show-graphic.svg">Graficar
+            </button>
+            <button type="button" class="btn btn-primary btn-green" (click)="openModalShowSignals(modalDownload)">
+              <img class="" src="../../assets/svg/download.svg">
+          </button>
+          </div>
+
+        <div class="col-md-2">
+          <div class="pr-3 pb-0 float-right text-right">
+            <span class="last-report-chart ">Última lectura</span><br>
+            <span class="last-report-date-chart">{{signal?.ultimoreporte}}</span>
+          </div>
+        </div>
+
+        <!--
+        <div class="col-md-12">
+          <div class="pr-3 pt-0 float-right text-right" *ngIf="signal?.cantidad_alarmas">
+            <span class="last-report-chart ">Alarmas generadas</span><br>
+            <span class="last-report-date-chart">{{signal?.cantidad_alarmas}}</span>
+          </div>
+        </div>-->
+      </div>
+    </div>
+
+    <div class="col-lg-12 p-0" *ngIf="showChart">
+
+      <div class="card p-2 m-0">
+        <div class="card-body p-0"><!--
+          <div echarts [options]="options" [merge]="updateOptions" theme="macarons"  class="chart" [loading]="isLoading"></div>-->
+          <div echarts [options]="options" [merge]="updateOptions" class="chart" id="chart"></div>
+        </div>
+        <div class="card-footer d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pb-1">
+          <button type="button" class="btn btn-sm btn btn-primary" (click)="removeData()">- <i class="far fa-chart-bar"></i></button>
+            <div class="form-group mb-2 ml-3 contenedor">
+              <label class="form-check-label check-label-radio" for="range1">
+                Periodo de tiempo
+              </label>
+              <select class="custom-select ml-1 contenedor2" name="miselect" [(ngModel)]="selectedHour">
+                <option [value]="item.id" *ngFor="let item of hours">{{item.name}}</option>
+              </select>
+            </div>
+          <button type="button" class="btn btn-sm btn-primary" (click)="addData()">+ <i class="far fa-chart-bar"></i></button>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+</div>
+
+<ng-template #modalSignals>
+  <div class="modal-header">
+    <span class="label-header-modal-signal">Agregar señal</span>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row no-gutters">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="input-group mt-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text background-transparent without-border-right">
+                    <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                  </span>
+                </div>
+                <input type="text" class="form-control without-border-left search" placeholder="Buscar"
+                  [(ngModel)]="searchSignals" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-2">
+            <ul class="list-signal" style="height: 500px; overflow: auto">
+              <li
+                *ngFor="let signal of signalList | filter : {text:searchSignals, variable:'signal_station' }; let i=index">
+                <div class="row no-gutters">
+                  <div class="col-md-1 mr-3">
+                    <span class="circle gray-circle float-left">
+                      <div class="circle-div">
+                        <img src="{{signal?.icono}}" style="width: 70%;">
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-9">
+                    <span class="list-name">{{signal?.nombre_variable}}</span><br>
+                    <span class="list-detail">{{signal?.nombre_estacion}}</span>
+                  </div>
+
+                  <div class="col-md-1 mt-2">
+                    <a (click)="addSignals(signal?.idsenal)" *ngIf="!(signals.includes(signal?.idsenal))">
+                      <img src="../../assets/svg/add.svg" class="float-right pointer mr-3">
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="onClose()">listo</button>
+  </div>
+</ng-template>
+
+
+<ng-template #modalDownload>
+  <div class="modal-header">
+      <span class="label-header-modal-signal">Opciones de exportación</span>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      <br>
+  </div>
+  <div class="modal-body">
+      <div class="form-inline">
+          <div class="form-group">
+              <label class="form-check-label">Ordenar datos por</label>
+              <ng-select class="auto-grow ml-2" [items]="exportData" bindLabel="name" bindValue="id"
+                  [(ngModel)]="selectedExportData" [clearable]="false">
+              </ng-select>
+          </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+          <div class="form-group">
+
+              <label for="excel" class="download--list">
+                  <input id="excel" class="radioExport" type="radio" value="xls" name="exportType"
+                      formControlName="exportType">
+                  <img class="" src="../../assets/svg/excel.svg">
+                  <span>Microsoft Excel</span>
+              </label>
+
+              <label for="word" class="download--list">
+                  <input id="word" class="radioExport" type="radio" value="rtf" name="exportType"
+                      formControlName="exportType">
+                  <img class="" src="../../assets/svg/word.svg">
+                  <span>Microsoft Word</span>
+              </label>
+
+              <label for="pdf" class="download--list">
+                  <input id="pdf" class="radioExport" type="radio" value="pdf" name="exportType"
+                      formControlName="exportType">
+                  <img class="" src="../../assets/svg/pdf.svg">
+                  <span>PDF</span>
+              </label>
+
+          </div>
+
+          <button class="float-right mt-3 btn btn-primary" type="submit" [disabled]="!form.valid"> Exportar</button>
+      </form>
+  </div>
+</ng-template>

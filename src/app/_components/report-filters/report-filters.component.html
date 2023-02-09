@@ -1,0 +1,158 @@
+<div class="form-inline m-3">
+  <div class="form-group mb-2 ml-3">
+    <input class="form-check-input" type="radio" name="ranges" id="range1" [value]="'range1'" checked
+      (change)="onChangeRange($event)">
+    <label class="form-check-label check-label-radio" for="range1">
+      Últimas
+    </label>
+    <select class="custom-select ml-2" name="miselect"  (change)="onSelectedTime()" [(ngModel)]="selectedHour" [disabled]="!disabledRanges">
+      <option [value]="item.id" *ngFor="let item of hours">{{item.name}}</option>
+    </select>
+  </div>
+  <div class="form-group ml-3 mr-2 mb-2">
+    <input class="form-check-input" type="radio" name="ranges" id="range2" [value]="'range2'"
+      (change)="onChangeRange($event)">
+    <label class="form-check-label check-label-radio" for="range2">
+      Rango fijo
+    </label>
+    <kendo-datetimepicker [format]="format" [(value)]="dateFrom" class="ml-2 mr-1" (valueChange)="onChange($event)"
+      id="datetimepicker1" [disabled]="disabledRanges" [(ngModel)]="dateFrom">
+    </kendo-datetimepicker>
+    -
+    <kendo-datetimepicker class="ml-1" [format]="format" [(value)]="dateTo" [min]="min" [max]="max" id="datetimepicker2"
+      [disabled]="disabledRanges" (valueChange)="onChange($event)"></kendo-datetimepicker>
+    <div class="form-group row ml-2">
+      <label class="col-sm-6 col-form-label pl-0 pr-0">Agrupar por</label>
+      <div class="col-sm-3 pl-0">
+        <select class="custom-select ml-2" name="miselect" [(ngModel)]="selectedGrouped">
+          <option [value]="item.id" *ngFor="let item of grouped">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="m-0">
+<div class="form-inline m-3">
+  <!--
+  <div class="form-group">
+    <label class="form-check-label ml-3">
+      Mostrar Rangos permitidos </label>
+  </div>
+  <div class="form-group ml-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" [(ngModel)]="selectedRangeByVariable">
+      <label class="form-check-label">
+        Por variable
+      </label>
+    </div>
+    <div class="form-group ml-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="selectedRangeBySignal">
+        <label class="form-check-label">
+          Por Señal
+        </label>
+      </div>
+    </div>
+  </div>
+-->
+<label class="col-form-label">Origen</label>
+<div class="col-lg-2">
+  <ng-select class="" [items]="origenVariable" bindLabel="name" bindValue="code" [(ngModel)]="selectedOrigen"
+    (change)="onSelectedOrigen()" [clearable]="false">
+  </ng-select>
+</div>
+
+  <div class="form-group ml-2 mr-2">
+    <label class="col-form-label">Variables</label>
+    <select class="custom-select ml-2" (change)="onSelectedVariable()" [(ngModel)]="selectedVariable">
+      <option [value]="item.idvariable" *ngFor="let item of variables">{{item.descripcion}}</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <!--
+    <div class="input-group-prepend">
+      <button class="btn btn-outline-secondary" [ngClass]="disabledUpdate? 'btn-borderless' : 'btn-active'"
+        type="button" (click)="onChangeUpdate($event)"><img class="" src="../../assets/svg/refresh.svg"></button>
+    </div>
+
+    <select class="custom-select" name="miselect" [(ngModel)]="selectedUpdate" [disabled]="disabledUpdate">
+      <option selected></option>
+      <option [value]="item.id" *ngFor="let item of update">{{item.name}}</option>
+    </select>
+  -->
+    <div class="input-group ml-4">
+      <button class="btn btn-purple" type="button" (click)="openModalShowSignals(modalSignals)"><img class=""
+          src="../../assets/svg/transmit.svg"></button>
+    </div>
+  </div>
+  <div class="input-group ml-4">
+    <button type="button" class="btn btn-primary" (click)="showChart()" [disabled]="(dataList.length < 1)" >
+      <img class="" src="../../assets/svg/show-graphic.svg">
+    </button>
+  </div>
+  <div class="input-group ml-4">
+    <button type="button" class="btn btn-danger  btn-block" (click)='onCleanFilter()'><i class="fas fa-trash-alt fa-1x"></i></button>
+  </div>
+  <div></div>
+</div>
+
+<ng-template #modalSignals>
+  <div class="modal-header">
+    <span class="label-header-modal-signal">Agregar señal</span>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row no-gutters">
+          <div class="col-lg-4">
+            <span>Origen:</span>
+            <ng-select class="" [items]="origen" bindLabel="name" bindValue="code" [(ngModel)]="origenSelected"
+              (change)="onChangeOrigen()" [clearable]="false">
+            </ng-select>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <div class="input-group mt-4 ajust">
+                <div class="input-group-prepend">
+                  <span class="input-group-text background-transparent without-border-right">
+                    <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                  </span>
+                </div>
+                <input type="text" class="form-control without-border-left search" placeholder="Buscar"
+                  [(ngModel)]="searchMySignals" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-2">
+            <ul class="list-signal" style="height: 500px; overflow: auto">
+              <li
+                *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'signal_station' }; let i=index">
+                <div class="row no-gutters">
+                  <div class="col-md-1 mr-3">
+                    <span class="circle gray-circle float-left">
+                      <div class="circle-div">
+                        <img src="{{signal.icono}}" style="width: 70%;">
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-9">
+                    <span class="list-name">{{signal.descsenal}}</span><br>
+                    <span class="list-detail">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</span>
+                  </div>
+
+                  <div class="col-md-1 mt-2">
+                    <img src="../../assets/svg/add.svg" class="float-right pointer mr-3" (click)="addSignal(signal)">
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,29 @@
+<div class="ml-4 mr-4 mt-15">
+  <app-alert [showReport]="true" [showAlert]="alert"></app-alert>
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body p-0 ">
+          <h3 class="m-3 label-options-report" (click)="onToggleCollapse()">Opciones del reporte</h3>
+          <app-report-filters [ngClass]="{visible: showCharts}" [signalId]='signalId' [signalIdAdd]='signalIdAdd' [signalIdAddGlobal]='signalIdAddGlobal' [signalIdAddRemove]='signalIdAddRemove' (isVisible)="onVisible($event)"
+            (isVisibleTable)="showTable($event)" (signalList)="getSignals($event)" (chartData)="getChartValue($event)" (objectData)="getObjectData($event)">
+          </app-report-filters>
+          <hr class="m-0">
+          <app-report-listing [ngClass]="{visible: showCharts}" [signalList]='signals'
+            (setSignalId)="getSignalId($event)" (setSignalIdAdd)="getSignalIdAdd($event)" (setSignalIdAddGlobal)="getSignalIdAddGlobal($event)"
+            (setSignalIdAddRemove)="getSignalIdAddRemove($event)">
+          </app-report-listing>
+        </div>
+      </div>
+      <br>
+      <div class="card" *ngIf="showCharts">
+        <div class="card-body">
+          <app-report-chart [chatData]='chartValue' [objectData]='chartObject'></app-report-chart>
+        </div>
+      </div>
+      <div class="col-md-12 text-center mt-3" *ngIf="getReports && !showCharts">
+        <img class="" src="../../assets/svg/no-reports.svg">
+      </div>
+    </div>
+  </div>
+</div>

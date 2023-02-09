@@ -1,0 +1,644 @@
+<!-- <div class="row  mt-15" *ngIf="!!mySignalList.length && mySignalList">
+  <div class="col-sm-12 ">
+    <div class="row">
+      <label class="col-sm-3 col-form-label">Estado</label>
+      <div class="col-sm-9">
+        <ng-select class="" [items]="state" bindLabel="name" bindValue="code" [(ngModel)]="stateSelected"
+          (change)="onChangeState()" [clearable]="false">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 ">
+    <div class="row">
+      <label class="col-sm-4 col-form-label">Estaciones</label>
+      <div class="col-sm-8">
+        <ng-select class="" [items]="stations" bindLabel="descripcion" bindValue="idestacion"
+          [(ngModel)]="stationSelected" (change)="onChangeStations()" (clear)="onClearStations()">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 ">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-transparent">
+            <img class="icon-menu" src="../../assets/svg/buscar.svg">
+          </span>
+        </div>
+        <input type="text" class="form-control form-control-transparent" placeholder="Buscar"
+          [(ngModel)]="searchMySignals" />
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- DESDE AQUI EMPIEZA -->
+
+
+<!--
+  <div class="row  mt-15">
+    <div class="col-lg-1 text-center mt-3" *ngIf="isResponsive">
+      <button type="button" [ngClass]="{'active-layout': !list}" class="btn btn-link btn-block" (click)="onChangeView('grid')"><i class="fas fa-border-all fa-1x"></i></button>
+    </div>
+    <div class="col-lg-1 text-center mt-3" *ngIf="isResponsive">
+      <button type="button" [ngClass]="{'active-layout': list}" class="btn btn-link btn-block" (click)="onChangeView('list')"><i class="fas fa-bars fa-1x"></i></button>
+    </div>
+    <div class="col-lg-2">
+      <span>Estado:</span>
+      <ng-select class="" [items]="state" bindLabel="name" bindValue="code" [(ngModel)]="stateSelected"
+        (change)="onChangeState()" [clearable]="false">
+      </ng-select>
+    </div>
+    <div class="col-lg-3">
+      <span>Estaciones:</span>
+      <ng-select class="" [items]="stations" bindLabel="descripcion" bindValue="idestacion"
+        [(ngModel)]="stationSelected" (change)="onChangeStations()" (clear)="onClearStations()">
+      </ng-select>
+    </div>
+    <div class="col-lg-3 text-center mt-3 pt-1">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-text-transparent">
+              <img class="icon-menu" src="../../assets/svg/buscar.svg">
+            </span>
+          </div>
+          <input type="text" class="form-control form-control-transparent" placeholder="Buscar"
+          [(ngModel)]="searchMySignals" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 mt-3">
+      <button type="button" class="btn btn-success btn-block" (click)="openModalShowSignals(modalSignals)"><i class="fas fa-plus-circle"></i></button>
+    </div>
+    <div class="col-lg-1 mt-3">
+      <button type="button" class="btn btn-danger  btn-block" (click)='onCleanFilter()'><i class="fas fa-trash-alt fa-1x"></i></button>
+    </div>
+  </div>
+
+
+  <div class="row" *ngIf="!list">
+    <div class="col-12 col-sm-6 col-lg-3 col-xxl-3 d-flex" *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index">
+
+        <div class="card mb-4 box-shadow flex-fill">
+            <div class="card-body p-2">
+                <div class="d-flex align-items-start">
+                    <div class="flex-grow-1">
+                        <h2 class="mb-2 text-uppercase" [ngClass]="{'text-primary': signal.estado === '1', 'text-warning': signal.estado === '0' }">{{signal.nombre_variable}}</h2>
+                        <p class="mb-2 font-italic ">{{signal.nombre_estacion}}</p>
+                    </div>
+                    <div class="d-inline-block m-0">
+                        <div class="stat" [ngClass]="{'blue': signal.estado === '1', 'yellow': signal.estado === '0' }">
+                            <img src="{{signal.icono}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-0">
+                    <div class="d-flex justify-content-between align-items-center mb-0">
+                        <h2>
+                            <span class="badge pl-2 pr-2 text-white" [ngClass]="{'bg-success': (signal.estado === '1' && signal.valor !== '0.0'), 'bg-danger': (signal.valor === '0.0'),  'yellow': signal.estado === '0' }">
+                                {{signal.etiqueta}}
+                            </span>
+                        </h2>
+                        <div *ngIf="signal.mando === 'S' && !!signal.comandos">
+                            <ui-switch checkedlabel="on" uncheckedlabel="off" size="small" (changeEvent)="onChangeSignal($event, signal, i)" [(ngModel)]="switchSignal[i].state"></ui-switch>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-0 mt-2">
+                    <div class="d-flex justify-content-between align-items-center mb-0">
+                        <p class="text-black pt-2">
+                            Último reporte
+                            <br>
+                            <small class="text-muted">
+                                {{signal.ultimoreporte}}
+                            </small>
+                        </p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary hover-info" [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal }">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary hover-danger" (click)="removeSignals(i,signal)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="list">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="table table-hover table-cursor">
+                    <thead>
+                        <tr>
+                            <th class="head-table table-text text-center" scope="col" colspan="2">Señal</th>
+                            <th class="head-table table-text" scope="col">Variable</th>
+                            <th class="head-table table-text" scope="col">Estación</th>
+                            <th class="head-table table-text" scope="col">Valor</th>
+                            <th class="head-table table-text" scope="col">Última lectura</th>
+                            <th class="head-table table-text" scope="col">Estado</th>
+                            <th class="head-table table-text text-center" scope="col" colspan="2">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index">
+                            <th class="table-text">
+                                <span class="circle gray-circle float-left" [ngClass]="{'blue': signal.estado === '1', 'yellow': signal.estado === '0' }">
+                                    <div class="circle-div">
+                                        <img src="{{signal.icono}}" style="width: 60%;">
+                                    </div>
+                                </span>
+                            </th>
+                            <th class="table-text">
+                                {{signal.nombre_variable}}
+                            </th>
+                            <td class="table-text type" *ngIf="signal.tipo === 'Analoga'"><img src="../../../assets/svg/analogo.svg" class="icon-menu"></td>
+                            <td class="" *ngIf="signal.tipo === 'Digital'">
+                                <img src="../../../assets/svg/digital.svg" class="icon-menu">
+                            </td>
+                            <td class="table-text station">{{signal.nombre_estacion}}</td>
+                            <td class="table-text value">
+                                <span class="badge p-2 text-white" [ngClass]="{'bg-success': (signal.estado === '1' && signal.valor !== '0.0'), 'bg-danger': (signal.valor === '0.0'),  'yellow': signal.estado === '0' }">
+                                    {{signal.etiqueta}}
+                                </span>
+                            </td>
+                            <td class="table-text">{{signal.ultimoreporte}}</td>
+                            <td class="table-text" *ngIf="signal.estado === '1'">Transmitiendo</td>
+                            <td class="table-text" *ngIf="signal.estado === '0'">Sin transmitir</td>
+                            <td class="table-text text-center">
+                                <a class="remove-signal" (click)="removeSignals(i,signal)">
+                                    <i class="fas fa-times-circle fa-2x"></i>
+                                </a>
+                            </td>
+                            <td class="table-text text-center">
+                                <ui-switch checkedlabel="on" uncheckedlabel="off" size="small" (changeEvent)="onChangeSignal($event, signal, i)" [(ngModel)]="switchSignal[i].state" *ngIf="signal.mando === 'S' && !!signal.comandos"></ui-switch>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #modalSignals>
+    <div class="modal-header">
+        <span class="label-header-modal-signal">Agregar señal</span>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group>
+                    <mat-tab label="Mis señales ({{mySignalList.length}})">
+                        <div class="row no-gutters">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group mt-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text background-transparent without-border-right">
+                                                <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control without-border-left search" placeholder="Buscar" [(ngModel)]="searchMySignals"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <ul class="list-signal" style="height: 500px; overflow: auto">
+                                    <li *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'signal_station' }; let i=index">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-1 mr-3">
+                                                <span class="circle gray-circle float-left">
+                                                    <div class="circle-div">
+                                                        <img src="{{signal.icono}}" style="width: 70%;">
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span class="list-name">{{signal.nombre_variable}}</span><br>
+                                                <span class="list-detail">{{signal.nombre_estacion}}</span>
+                                            </div>
+
+                                            <div class="col-md-1 mt-2">
+                                                <img src="../../assets/svg/remove.svg" class="float-right pointer mr-3" (click)="removeSignals(i,signal)">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Señales">
+                        <div class="row no-gutters">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group mt-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text background-transparent without-border-right">
+                                                <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control without-border-left search" placeholder="Buscar" [(ngModel)]="searchSignals"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <ul class="list-signal" style="height: 500px; overflow: auto">
+                                    <li *ngFor="let signal of signalList | filter : {text:searchSignals, variable:'signal_station' }; let i=index">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-1 mr-3">
+                                                <span class="circle gray-circle float-left">
+                                                    <div class="circle-div">
+                                                        <img src="{{signal.icono}}" style="width: 70%;">
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span class="list-name">{{signal.nombre_variable}}</span><br>
+                                                <span class="list-detail">{{signal.nombre_estacion}}</span>
+                                            </div>
+
+                                            <div class="col-md-1 mt-2">
+                                                <img src="../../assets/svg/add.svg" class="float-right pointer mr-3" (click)="addSignal(signal,i)">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</ng-template>
+-->
+
+<!-- ACA TERMINA -->
+
+
+
+<div class="row  mt-15">
+  <div class="col-lg-1 text-center mt-2" *ngIf="isResponsive">
+    <button type="button" [ngClass]="{'active-layout': !list}" class="btn btn-link btn-block" (click)="onChangeView('grid')"><i class="fas fa-border-all fa-1x"></i></button>
+  </div>
+  <div class="col-lg-1 text-center mt-2" *ngIf="isResponsive">
+    <button type="button" [ngClass]="{'active-layout': list}" class="btn btn-link btn-block" (click)="onChangeView('list')"><i class="fas fa-bars fa-1x"></i></button>
+  </div>
+  <div class="col-lg-1 text-center mt-2" >
+    <button type="button" [ngClass]="{'active-estado': variablex, 'active-estado-rojo': !variablex}" class="btn btn-link btn-block" (click)="openUpdate(actualizar)"><i class="fas fa-sync fa-1x"></i></button>
+  </div>
+  <div class="col-lg-2">
+    <span>Estado:</span>
+    <ng-select class="" [items]="state" bindLabel="name" bindValue="code" [(ngModel)]="stateSelected"
+      (change)="onChangeState()" [clearable]="false">
+    </ng-select>
+  </div>
+  <div class="col-lg-3">
+    <span>Estaciones:</span>
+    <ng-select class="" [items]="stations" bindLabel="descripcion" bindValue="idestacion"
+      [(ngModel)]="stationSelected" (change)="onChangeStations()" (clear)="onClearStations()">
+    </ng-select>
+  </div>
+  <div class="col-lg-2 text-center mt-3 pt-1">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-transparent">
+            <img class="icon-menu" src="../../assets/svg/buscar.svg">
+          </span>
+        </div>
+        <input type="text" class="form-control form-control-transparent" placeholder="Buscar"
+        [(ngModel)]="searchMySignals" />
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-1 mt-3">
+    <button type="button" class="btn btn-success btn-block" (click)="openModalShowSignals(modalSignals)"><i class="fas fa-plus-circle"></i></button>
+  </div>
+  
+  <div class="col-lg-1 mt-3">
+    <button type="button" class="btn btn-danger  btn-block" (click)='onCleanFilter()'><i class="fas fa-trash-alt fa-1x"></i></button>
+  </div>
+</div>
+
+<!-- DESDE AQUI --><!--
+<div class="row" *ngIf="!list">
+  <div class="col-12 col-sm-6 col-lg-3 col-xxl-3 d-flex" *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index">
+
+      <div class="card mb-4 box-shadow flex-fill">
+          <div class="card-body p-2">
+              <div class="d-flex align-items-start">
+                  <div class="flex-grow-1">
+                      <h2 class="mb-2 text-uppercase" [ngClass]="{'text-primary': signal.estado === '1', 'text-warning': signal.estado === '0' }">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</h2>
+                      <p class="mb-2 font-italic ">{{signal.descsenal}} </p>
+                  </div>
+                  <div class="d-inline-block m-0">
+                      <div class="stat" [ngClass]="{'blue': signal.estado === '1', 'yellow': signal.estado === '0' }">
+                          <img src="{{signal.icono}}">
+                      </div>
+                  </div>
+              </div>
+              <div class="card-footer p-0">
+                  <div class="d-flex justify-content-between align-items-center mb-0">
+                      <h2>
+                          <span class="badge pl-2 pr-2 text-white" [ngClass]="{'bg-success': (signal.estado === '1' && signal.valor !== '0.0'), 'bg-danger': (signal.valor === '0.0'),  'yellow': signal.estado === '0' }">
+                              {{signal.etiqueta}}
+                          </span>
+                      </h2>
+
+                  </div>
+              </div>
+              <div class="card-footer p-0 mt-2">
+                  <div class="d-flex justify-content-between align-items-center mb-0">
+                      <p class="text-black pt-2">
+                          Último reporte
+                          <br>
+                          <small class="text-muted">
+                              {{signal.ultimoreporte}}
+                          </small>
+                      </p>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-sm btn-outline-secondary hover-info" [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal }">
+                              <i class="fas fa-chart-line"></i>
+                          </button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary hover-danger" (click)="removeSignals(i,signal)">
+                              <i class="fas fa-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+-->
+<!-- HASTA AQUI -->
+
+<!-- ESTA ES LA DE ANTES NO BORRAR -->
+<div class="row" *ngIf="!list">
+  <div class="col-lg-4 col-xl-3"
+    *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index">
+    <div class="card">
+     <!-- <div class="card-header">
+        <a class="remove-signal" (click)="removeSignals(i,signal)">
+          <i class="fas fa-times-circle fa-lg"></i>
+        </a>
+      </div> -->
+     <!-- <a class="link-chart" [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal }"> -->
+        <div class="card-body p-0">
+          <div class="card-gray p-2">
+            <span class="circle float-right"
+              [ngClass]="{'blue': signal.estado === '1', 'yellow': signal.estado === '0' }">
+              <div class="circle-div">
+                <img src="{{signal.icono}}">
+              </div>
+            </span>
+            <span class="card-header-title card-title mb-0"
+              [ngClass]="{'blue-cart-label': signal.estado === '1', 'yellow-cart-label': signal.estado === '0' }">
+              {{signal.nombre_variable}} - {{signal.nombre_estacion}}</span>
+            <span class="card-header-subtitle mb-0"
+              [ngClass]="{'blue-cart-label': signal.estado === '1', 'yellow-cart-label': signal.estado === '0' }">
+              {{signal.descsenal}}</span>
+            <span class="card-text ">{{signal.valor}} {{signal.unidad}}</span>
+          </div>
+          <!--
+          <div class="p-2">
+            <span class="last-report">Última lectura</span><br>
+            <span class="last-report-date">{{signal.ultimoreporte}}</span>
+          </div>
+        -->
+          <div class="card-footer p-0 mt-2">
+            <div class="d-flex justify-content-between align-items-center mb-0">
+                <p class="text-black pt-2">
+                    Último reporte
+                    <br>
+                    <small class="text-muted">
+                        {{signal.ultimoreporte}}
+                    </small>
+                </p>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary hover-info" [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal }">
+                        <i class="fas fa-chart-line"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary hover-danger" (click)="removeSignals(i,signal)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+   <!-- </a> -->
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="list">
+  <div class="col-md-12 col-lg-12">
+    <div class="card">
+      <div class="card-body p-0">
+        <table class="table table-hover table-cursor">
+          <thead>
+            <tr>
+              <th class="head-table table-text" scope="col">Señal</th>
+              <th class="head-table table-text" scope="col">Tipo</th>
+              <th class="head-table table-text" scope="col">Variable - Estación</th>
+              <th class="head-table table-text" scope="col">Valor</th>
+              <th class="head-table table-text" scope="col">Última lectura</th>
+              <th class="head-table table-text" scope="col">Estado</th>
+              <th class="head-table table-text" scope="col">Graficar - Remover</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'nombre_variable' }; let i=index">
+              <th class="table-text">
+                <img src="{{signal.icono}}" class="icon-list mr-1"
+                  [ngClass]="{'blue-cart-filter': signal.estado === '1', 'yellow-cart-filter': signal.estado === '0' }">
+                  {{signal.descsenal}}
+              </th>
+              <td class="table-text type" *ngIf="signal.tipo === 'Analoga'"><img src="../../../assets/svg/analogo.svg"
+                  class="icon-menu"></td>
+              <td class="" *ngIf="signal.tipo === 'Digital'">
+                <img src="../../../assets/svg/digital.svg" class="icon-menu">
+              </td>
+              <td class="table-text station">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</td>
+              <td class="table-text value">{{signal.valor}} {{signal.unidad}}</td>
+              <td class="table-text">{{signal.ultimoreporte}}</td>
+              <td class="table-text" *ngIf="signal.estado === '1'">Transmitiendo</td>
+              <td class="table-text" *ngIf="signal.estado === '0'">Sin transmitir</td>
+
+              <td class="table-text text-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary hover-info" [routerLink]="['/charts',signal.idsenal]" [state]="{ signal: signal }">
+                      <i class="fas fa-chart-line"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hover-danger" (click)="removeSignals(i,signal)">
+                      <i class="fas fa-trash"></i>
+                  </button>
+              </div>
+                <!--
+                <a class="remove-signal" (click)="removeSignals(i,signal)">
+                  <i class="fas fa-times-circle fa-2x"></i>
+                </a>
+              -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalSignals>
+<div class="modal-header">
+  <span class="label-header-modal-signal">Agregar señal</span>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-tab-group>
+        <mat-tab label="Mis señales ({{mySignalList.length}})">
+          <div class="row no-gutters">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="input-group mt-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text background-transparent without-border-right">
+                      <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                    </span>
+                  </div>
+                  <input type="text" class="form-control without-border-left search" placeholder="Buscar"
+                    [(ngModel)]="searchMySignals" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-2">
+              <ul class="list-signal" style="height: 500px; overflow: auto">
+                <li
+                  *ngFor="let signal of mySignalList | filter : {text:searchMySignals, variable:'signal_station' }; let i=index">
+                  <div class="row no-gutters">
+                    <div class="col-md-1 mr-3">
+                      <span class="circle gray-circle float-left">
+                        <div class="circle-div">
+                          <img src="{{signal.icono}}" style="width: 70%;">
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col-md-9">
+                      <span class="list-name">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</span><br>
+                      <span class="list-detail">{{signal.descsenal}}</span>
+                    </div>
+
+                    <div class="col-md-1 mt-2">
+                      <img src="../../assets/svg/remove.svg" class="float-right pointer mr-3"
+                        (click)="removeSignals(i,signal)">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Señales">
+          <div class="row no-gutters">
+            <div class="col-lg-4">
+              <span>Origen:</span>
+              <ng-select class="" [items]="origen" bindLabel="name" bindValue="code" [(ngModel)]="origenSelected"
+                (change)="onChangeOrigen()" [clearable]="false">
+              </ng-select>
+            </div>
+            <div class="col-md-7">
+              <div class="form-group">
+                <div class="input-group mt-4 ajuste">
+                  
+                  <div class="input-group-prepend">
+                    <span class="input-group-text background-transparent without-border-right">
+                      <img class="icon-menu" src="../../assets/svg/buscar.svg">
+                    </span>
+                    
+                  </div>
+                  <input type="text" class="form-control without-border-left search" placeholder="Buscar"
+                    [(ngModel)]="searchSignals" />
+                  
+                    
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-2">
+              <ul class="list-signal" style="height: 500px; overflow: auto">
+                <li
+                  *ngFor="let signal of signalList | filter : {text:searchSignals, variable:'signal_station' }; let i=index">
+                  <div class="row no-gutters">
+                    <div class="col-md-1 mr-3">
+                      <span class="circle gray-circle float-left">
+                        <div class="circle-div">
+                          <img src="{{signal.icono}}" style="width: 70%;">
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col-md-9">
+                      <span class="list-name">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</span><br>
+                      <span class="list-detail">{{signal.descsenal}}</span>
+                    </div>
+
+                    <div class="col-md-1 mt-2">
+                      <img src="../../assets/svg/add.svg" class="float-right pointer mr-3"
+                        (click)="addSignal(signal,i)">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+<ng-template #actualizar>
+  <div class="dimensiones">
+    <div class="icons-principal">
+      <img src="../../../assets/svg/icon-update.svg" alt="" class="icon-position">
+    </div>
+    <div class="text-principal">
+      <b class="titulo">
+        Actualización automática</b>
+    </div>
+
+    <div class="col-lg-2 estaes">
+      <ng-select class="auto-grow mr-4" placeholder="Escoja una opción" [items]="tiempos"  bindLabel="tiempo" bindValue="id" [(ngModel)]="selectedTiempo" (change)="onChangeTiempo()"
+        [clearable]="false">
+      </ng-select>
+    </div>
+
+    <div>
+      <button type="button" [disabled]="variablex" class="btn btn-success btn-block iniciar" (click)="onUpdateTime()"><i class="fas fa-stopwatch"> </i> Activar proceso</button>
+    </div>
+    <div>
+      <button type="button" [disabled]="!variablex" class="btn btn-danger  btn-block parar" (click)='onParar()'><i class="far fa-stop-circle"></i> Desactivar proceso</button>
+    </div>
+  </div>
+</ng-template>

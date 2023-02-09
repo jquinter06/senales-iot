@@ -1,0 +1,128 @@
+﻿<div class="box w-100 pl-md-3">
+  <div class="pt-3 px-3 pt-md-5 px-md-5 overflow-hidden one">
+    
+    <div class="login">
+      <div class="ml-4 mb-5">
+        <img class="icon-menu " src="../../../assets/svg/loginLogo.svg">
+      </div>
+      <h1 class="label-login mb-4 text-left">Inicio de sesión</h1>
+      <p class="lead info-login text-left">Ingrese sus datos de usuario y contraseña para entrar.</p><br>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username" class="float-left login-labels">Usuario</label>
+          <div class="input-group mb-3 ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><img class="icon-menu "
+                  src="../../../assets/svg/login-user.svg"></span>
+            </div>
+            <input type="text" formControlName="username" class="form-control form-control-transparent"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Se requiere el nombre de usuario*</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="float-left login-labels">Contraseña</label>
+          <div class="input-group mb-3 ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><img class="icon-menu "
+                  src="../../../assets/svg/login-pass.svg"></span>
+            </div>
+            <input type="password" formControlName="password" class="form-control form-control-transparent"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">se requiere contraseña*</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!!error" class="alert alert-danger">{{error}}</div>
+        <section class="example-section">
+          <mat-checkbox class="example-margin" formControlName="rememberUser" [color]="'primary'">Recordar usuario</mat-checkbox>
+        </section>
+        <div class="text-center">
+          <button class="btn btn-primary btn-login">
+            Ingresar
+          </button><br> <br>
+          <button type="button" class="btn btn-link forget-password" (click)="openModal(template)">¿olvidaste
+            tu contraseña?</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="text-center overflow-hidden d-none d-lg-block two">
+    <img [src]="xreportImg[indexLabel]"class="xport-img">
+    <div class="mx-auto bg-blue">
+      <div class="text-center div-xreport">
+        <h2 class="label-xrepots flex-1">Bienvenido a Reports</h2>
+        <p class="lead parragraph-xreports flex-2">{{xportLabel}}</p>
+        <ol class="carousel-indicators">
+          <li (click)="selectXportLabel(0)" class="carousel-item" [ngClass]="{'active': indexLabel === 0}"></li>
+          <li (click)="selectXportLabel(1)" class="carousel-item" [ngClass]="{'active': indexLabel === 1}"></li>
+          <li (click)="selectXportLabel(2)" class="carousel-item" [ngClass]="{'active': indexLabel === 2}"></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="!loading">
+      <div class="col-md-6" *ngIf="!sentSuccessfully">
+        <div class="text-center">
+          <img class="icon-menu " src="../../../assets/svg/basic-auth.svg"><br>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="!sentSuccessfully">
+        <h2 class="label-forgot-password">¿Olvidaste tu contraseña?</h2>
+        <p class="parragraph-forgot-password">Ingresa tu usuario para enviar un email con la nueva contraseña</p>
+        <form [formGroup]="forgotForm" (ngSubmit)="onForgot()">
+          <div class="form-group">
+            <label for="username">Usuario</label>
+            <div class="input-group mb-3 ">
+              <input type="text" formControlName="name" class="form-control"
+                [ngClass]="{ 'is-invalid': (submittedforgotForm && forgotf.name.errors) || sendForgotError }"
+                placeholder="Ingresa tu usuario" />
+              <div *ngIf="(submittedforgotForm && forgotf.name.errors) || sendForgotError" class="invalid-feedback">
+                <div *ngIf="forgotf.name.errors || sendForgotError">{{forgotError}}*</div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary btn-login rounded-pill">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-12 text-center" *ngIf="sentSuccessfully" style="padding: 50px;">
+        <img class="icon-menu " src="../../../assets/svg/success-forgot.svg"><br>
+        <span class="header-success-forgot">Correo de recuperación enviado</span><br>
+        <span class="header-success-send">{{successMailMsj}}.</span><br><br>
+        <button class="btn btn-primary btn-ok" (click)="modalRef.hide()">
+          ok
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="loading">
+      <div class="col-md-12 text-center">
+        <img src="assets/images/loading.gif" class="img-fluid" alt="Loading">
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="modal-backdrop fade in show" *ngIf='loading'>
+  <div class="text-center mt-10">
+    <br>
+    <div class="col-md-12 text-center">
+      <img src="assets/images/loading.gif" class="img-fluid" alt="Loading">
+    </div>
+  </div>
+</div>

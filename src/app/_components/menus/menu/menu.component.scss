@@ -1,0 +1,22 @@
+@import '../../../../globals.scss';
+.sidebar-header-h3 {
+  padding: 11px ;
+}
+
+.menu-span {
+  position: relative;
+  top: 2px;
+}
+
+.item--active {
+  font-weight: bold;
+  color:$main-color;
+}
+
+.icon-menu {
+  filter: invert(80%) sepia(10%) saturate(500%) hue-rotate(160deg);
+}
+
+.item--active > .icon-menu {
+  filter: invert(10%) sepia(40%) saturate(10000%) hue-rotate(235deg);
+}

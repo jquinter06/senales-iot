@@ -1,0 +1,36 @@
+<div class="mt-4 ml-4 mr-4">
+  <div class="row mb-2 mt-15" [ngClass]="{'mt-15' : !expand}">
+    <div class="col-md-1 mt-2 pr-0"><span>Filtrar Por</span></div>
+
+    <div class="col-sm-12 col-md-3 pl-0">
+        <ng-select class="auto-grow ml-2" [items]="tiposeleccion" bindLabel="nombre" bindValue="id"
+          [(ngModel)]="selectedPanel" [clearable]="true" (change)="onChange($event)">
+        </ng-select>
+        
+    </div>
+    
+    <div class="col-sm-12 col-md-3 pl-0" >
+      <ng-select *ngIf="selectedPanel != null" class="auto-grow ml-2" [items]="panels" bindLabel="nombre" bindValue="id"
+        [(ngModel)]="selectedOption" [clearable]="true" (change)="onChangeSelection($event)">
+      </ng-select>
+  </div>
+
+  <div class="col-sm-12 col-md-3 pl-0" >
+    <ng-select *ngIf="selectedOption != null && selectionEmpresa == false && this.estaciones.length > 1" class="auto-grow ml-2" [items]="estaciones" bindLabel="nombre" bindValue="nombre"
+      [(ngModel)]="selectedDetalisStations" [clearable]="true" (change)="onChangeSelectionDetalle($event)">
+    </ng-select>
+</div>
+
+    <div class="col-sm-12 col-md-2">
+      <a (click)="expanPanel()">
+        <img *ngIf="!expand" class="pointer icon-menu float-right mt-1" src="../../assets/svg/open.svg">
+        <img *ngIf="expand" class="pointer icon-menu float-right mt-1" src="../../assets/svg/close.svg">
+      </a>
+    </div>
+  </div>
+
+  <div class="embed-responsive embed-responsive-16by9" *ngIf="!!url">
+    <span>{{url}}</span>
+    <iframe class="embed-responsive-item" [src]='url' allowfullscreen></iframe>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.table td,
+.table th {
+  padding: 0.5rem;
+  vertical-align: middle;
+}
+.table-text {
+  font-weight: 300;
+}
+.scroll {
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.btn-link {
+  color: #f7685b;
+}
+
+.btn-link:hover {
+  color: #f7685b;
+  text-decoration: underline;
+}

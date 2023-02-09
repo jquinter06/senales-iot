@@ -1,0 +1,125 @@
+.demo-chart {
+  height: 400px;
+}
+
+.back {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  color: #8492a4;
+}
+
+.circle {
+  background: #22b0fc;
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 46px;
+}
+
+.card-header-title {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.04em;
+  color: #0c1032;
+}
+.last-report-chart {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  color: #8492a4;
+  display: inline-block;
+}
+
+.last-report-date-chart {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  color: #334d6e;
+  display: inline-block;
+}
+
+
+.sublabel{
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  color: #334D6E;
+}
+
+.chart{
+  height: 70vh;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+}
+
+/* RANGO FECHAS */
+
+.fecha-grafica{
+  align-self: center;
+  text-align: center;
+}
+
+.contenedor{
+  align-self: center;
+  text-align: center;
+}
+
+
+/*
+.label-report {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+}
+*/
+.download--list {
+  padding: 17px 0px;
+  border-bottom: 1px solid #c2cfe0;
+  width: 400px;
+  cursor: pointer;
+}
+
+.download--list--checkbox {
+  display: block;
+}
+:checked + span {
+  font-weight: bold;
+}
+
+/* Optional other stuff just to make it look better */
+label {
+  display: inline-block;
+  width: 200px;
+  padding: 5px;
+}
+
+.contenedor2{
+  width: 50%;
+  text-align: center;
+}
+
+.btn-green{
+  margin-left: 0.5rem;
+}

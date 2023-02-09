@@ -1,0 +1,97 @@
+<div class = "dimensiones">
+  <div class="close">
+      <img class="icon-close" src="../../../assets/svg/x.svg" (click)="onNoClick()"><br>
+  </div>
+
+  <div class="descripcion">
+      <div class="icons-principal">
+          <img src="../../../assets/svg/icon.svg" alt="" class="icon-position">
+      </div>
+      <div class="text-principal">
+          <b class="titulo">Tu atención es requerida</b>
+          <b class="texto">Se ha detectado que el {{alarms.variable}} para la estación {{alarms.estacion}} esta fuera de rango.
+          </b>
+      </div>
+  </div>
+
+  <div class="data">
+      <div class="dinition">
+          <b class="datos-denition">Name</b>
+
+          <b class="datos-denition">Estación</b>
+
+          <b class="datos-denition">Señal</b>
+
+          <b class="datos-denition">Valor actual</b>
+
+          <b class="datos-denition">Ultimos valores</b>
+      </div>
+
+      <div class="valores">
+          <b class="datos-valores">{{alarms.name}}</b>
+          <b class="datos-valores">{{alarms.estacion}}</b>
+          <b class="datos-valores">{{alarms.senal}}</b>
+          <b class="datos-valores-valor">{{alarms.valoractual}}</b>
+          <b class="datos-valores">{{alarms.ultimovalor}}</b>
+      </div>
+      </div>
+
+  <div  class="botones">
+      <button class="butom_otro">
+          <span class="butoon_otro_content">
+              <img src="../../../assets/svg/Boton.svg" alt="" class="tamaño-botones" (click)="openModal(template)">
+          </span>
+      </button>
+      <button class="butom">
+          <span class="butoom_otro_content">
+              <img src="../../../assets/svg/Boton_visto.svg" class="tamaño-botones" alt="" (click)="marcarleidas(alarms.id)">
+          </span>
+      </button>
+  </div>
+
+<ng-template #template>
+  <div class="tamaño-dos">
+    <div class="datos-template">
+      <div class="definition-template">
+        <div>
+         <h5 class="aten-alarm">Atender alarma</h5>
+        </div>
+        <div>
+          <span class="dete-error">Se ha detectado que el {{alarms.variable}} para la estación {{alarms.estacion}} esta fuera de rango.</span>
+        </div>
+      </div>
+<div class="form-alerta">
+  <div class="form-causal">
+    <div>
+      <b class="opt-causal">Causal</b>
+    </div>
+    <div class="col-lg-2">
+      <ng-select class="auto-grow mr-4" [items]="causales"  bindLabel="name" bindValue="id" [(ngModel)]="selectedOption"
+        [clearable]="false">
+      </ng-select>
+    </div>
+  </div>
+  <div class="form-observacion">
+    <div>
+      <b class="opt-observacion">Observación</b>
+    </div>
+    <div class="area">
+      <textarea type="text" rows="4" cols="50" name="observacion" id="observacion"
+                class="form-control" placeholder="Ingresa una observacion"
+                [(ngModel)]="observacion">
+    </textarea>
+    </div>
+  </div>
+</div>
+    <div>
+      <button class="butom-enviar">
+          <span class="buton-t" (click)="atenderAlarms(alarms.id)">
+              Enviar
+          </span>
+      </button>
+  </div>
+  </div>
+  </div>
+</ng-template>
+</div>
+

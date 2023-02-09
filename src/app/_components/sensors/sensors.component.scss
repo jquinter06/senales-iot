@@ -1,0 +1,36 @@
+.icon-list {
+  width: 13px;
+}
+
+.card-header-title {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.04em;
+}
+
+.blue {
+  background-color: #22b0fc !important;
+}
+
+.yellow {
+  background-color: #ffb946 !important;
+}
+
+.blue-cart-label {
+  color: #22b0fc !important;
+}
+
+.blue-cart-filter {
+  filter: invert(50%) sepia(80%) saturate(500%) hue-rotate(160deg);
+}
+
+.yellow-cart-label {
+  color: #ffb946 !important;
+}
+
+.yellow-cart-filter {
+  filter: invert(60%) sepia(30%) saturate(1000%) hue-rotate(350deg);
+}

@@ -1,0 +1,50 @@
+<div class="m-3">
+  <table class="table table-hover table-cursor">
+    <thead>
+      <tr>
+        <th class="head-table table-text" scope="col">
+          <input type="checkbox" [(ngModel)]="isCheck" aria-label="Checkbox for following text input"
+            (change)="selectAll()">
+        </th>
+        <th class="head-table table-text" scope="col" style="padding-left: 24px">Tipo</th>
+        <th class="head-table table-text" scope="col">Señal</th>
+        <th class="head-table table-text" scope="col">Variable - Estación</th>
+        <th class="head-table table-text" scope="col">Origen</th>
+        <th class="head-table table-text" scope="col">Valor</th>
+        <th class="head-table table-text" scope="col">Ubicación</th>
+       <!-- <th class="head-table table-text" scope="col">Color</th>  -->
+       <!-- <th class="head-table table-text" scope="col">Equipo</th> -->
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let signal of signalArray; let i=index">
+        <td>
+          <input type="checkbox" id="{{signal.idsenal}}" class="checkbox" (change)="isChecked(signal.idsenal, $event)">
+        </td>
+        <td class="table-text type" *ngIf="signal.tipo === 'Analoga'"><img src="../../../assets/svg/analogo.svg"
+            class="icon-menu"></td>
+        <td class="" *ngIf="signal.tipo === 'Digital'">
+          <img src="../../../assets/svg/digital.svg" class="icon-menu">
+        </td>
+        <th class="table-text">{{signal.descsenal}} </th>
+        <td class="table-text value">{{signal.nombre_variable}} - {{signal.nombre_estacion}}</td>
+        <td class="table-text" *ngIf="signal.manual === 'S'">Manual</td>
+        <td class="table-text" *ngIf="signal.manual === 'N'">Automatico</td>
+        <td class="table-text" *ngIf="!signal.manual">No definido</td>
+        <td class="table-text value">{{signal.valor}} {{signal.unidad}}</td>
+        <td class="table-text value">{{signal.ubicacion}}</td>
+
+        <!--<td class="table-text value">
+          <select class="custom-select">
+            <option [value]="color.valor" *ngFor="let color of colors" [selected]="color.valor == signal.color.valor">
+              {{color.nombre}}</option>
+          </select>
+        </td>-->
+        <td class="table-text value"></td>
+      </tr>
+    </tbody>
+  </table>
+  <!--<button class="float-right btn btn-link" *ngIf="!!signalArray?.length" (click)="resetTable()"> Limpiar
+    señales</button>-->
+</div>
